@@ -1,5 +1,7 @@
 package com.cybersoft.food_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "restaurant_review")
@@ -17,6 +19,7 @@ public class RestaurantReviewEntity {
 
     @ManyToOne()
     @JoinColumn(name = "id_restaurant")
+    @JsonIgnore
     private RestaurantEntity restaurant;
 
     public int getId() {

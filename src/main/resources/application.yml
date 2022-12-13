@@ -19,3 +19,8 @@ server:
 #@Value(${tenkey}) : Lấy giá trị key bên appplication thành biến
 file:
   upload-dir: D:\CyberSoft\img_food
+
+redis:
+  host: localhost
+  port: 6379
+
