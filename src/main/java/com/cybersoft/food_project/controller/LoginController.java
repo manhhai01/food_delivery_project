@@ -1,10 +1,14 @@
 package com.cybersoft.food_project.controller;
 
+import com.cybersoft.food_project.exception.DeviceZeroException;
 import com.cybersoft.food_project.jwt.JwtTokenHelper;
 import com.cybersoft.food_project.payload.request.SignInRequest;
 import com.cybersoft.food_project.payload.response.DataResponse;
 import com.cybersoft.food_project.payload.response.DataTokenResponse;
 import com.cybersoft.food_project.services.LoginService;
+import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin //Cho phép những domain khác với domain của api truy cập vào.
@@ -31,8 +36,18 @@ public class LoginController {
     @Autowired
     JwtTokenHelper jwtTokenHelper;
 
+    // Khai bao va khoi tao logger
+    Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @GetMapping("/test")
     public String test(){
+
+        try {
+            int a = 2/0;
+        } catch (Exception e) {
+            throw new DeviceZeroException(e.getMessage());
+        }
+
         return "Hello";
     }
 
@@ -40,7 +55,10 @@ public class LoginController {
     private long refreshExpiredDate = 80 * 60 * 60 * 1000;
 
     @PostMapping("")
-    public ResponseEntity<?> singin(@RequestBody SignInRequest request){
+    public ResponseEntity<?> singin(@Valid @RequestBody SignInRequest request){
+
+        Gson gson = new Gson();
+        logger.info(gson.toJson(request));
 
 //        boolean isSuccess = loginService.checkLogin(request.getUsername(),request.getPassword());
         UsernamePasswordAuthenticationToken authRequest =

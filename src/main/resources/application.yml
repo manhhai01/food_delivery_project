@@ -24,3 +24,9 @@ redis:
   host: localhost
   port: 6379
 
+# Đăng ký level log cho toàn project
+#logging:
+#  level:
+#    root: info
+#  file:
+#    name: D:\CyberSoft\FoodProject\log\dev.log
